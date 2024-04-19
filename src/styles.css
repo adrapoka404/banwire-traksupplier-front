@@ -1,0 +1,82 @@
+.box-shadow {
+  box-shadow: 0px, 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con opacidad */
+}
+
+.popup {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 80%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow-y: scroll;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.active {
+  color: white;
+  text-decoration: none;
+}
+
+.btn {
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0px, 3px, 0px, 3px;
+  text-decoration: none;
+}
+
+.primary {
+  background-color: #222654;
+}
+.primary:hover {
+  background: #e7e7e7;
+  color: black;
+}
+
+.secondary {
+  background-color: #e7e7e7;
+  color: black;
+}
+
+/* .form-field {
+  margin-bottom: 3px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 3px;
+} */
+
+.form-field input {
+  width: 100%;
+}
