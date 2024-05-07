@@ -1,0 +1,112 @@
+.navbar {
+    background-color: #FCEA10;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.containerNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 24px;
+    color: #333333;
+    text-decoration: none;
+}
+
+.nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-item {
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.nav-link {
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #101010;
+    position: relative;
+}
+
+.nav-link:hover {
+    text-decoration: none;
+    outline: 0 none;
+    color: #ff8b00;
+}
+
+.nav-item.active a {
+    color: #ff8b00 !important
+}
+
+.navbar.sticky {
+    background-color: #FCEA10 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.separator {
+    width: 1px; /* Ancho del separador */
+    height: 20px; /* Altura del separador */
+    background-color: #000; /* Color del separador */
+    margin-left: 10px;
+    margin-right: -10px;
+}
+
+.nav-client {
+    background-color: white;
+    margin-left: 10px;
+    padding-right: 20px; 
+    height: 40px; 
+    align-items: center; 
+    display: flex;
+    border-radius: 10px;
+}
+@media (max-width: 768px) {
+    .containerNav {
+        
+        flex-direction: column;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+   
+.nav-client {
+    display: none;
+}
+    
+    
+
+    .navbar.sticky {
+        background-color: #FCEA10 !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 100px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}

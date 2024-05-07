@@ -9,6 +9,7 @@ import {
   PendingPage,
   SuccessPage,
 } from "../banwire/pages";
+import { HomePage } from "../auth/pages";
 
 export const AppRouter = () => {
   const location = useLocation();
@@ -34,8 +35,9 @@ export const AppRouter = () => {
           </>
         ) : (
           <>
+            <Route path="/*" element={<HomePage />} />
             <Route path="/auth/*" element={<AuthRoutes />} />
-            <Route path="*" element={<Navigate to="/auth/login" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </>
         )}
         <Route path="/payment/notifyOxxo" element={<NotifyOxxoPage />} />

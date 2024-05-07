@@ -1,0 +1,112 @@
+.w100 {
+    width: 110%;
+    display: block;
+}
+.full-width-header .rs-header .menu-area .logo-area img {
+    transition: 0.4s;
+    -webkit-transition: 0.4s;
+    max-height:none!important;
+    width: 100%;
+    height: auto!important;
+}
+.menu-sticky {
+    background: #FCEA10!important;
+}
+.full-width-header .rs-header .menu-area.sticky {
+    background: #FCEA10!important;
+}
+.rs-quote.style1 .quote-form {
+    background: #fff!important;
+}
+.rs-quote.style1 .quote-form {
+    background: #FCEA10;
+    padding: 50px 50px 80px;
+    border-radius: 20px;
+    box-shadow: 0 0 72px -10px rgba(0, 0, 0, 0.22);
+}
+.rs-slider.slider6 .slider {
+    height: 560px!important;
+    padding: 95px 0 0!important;
+}
+.center_txt{
+    text-align: center!important;
+}
+.rs-whychooseus.style2 .rs-counter-list {
+    background: #fff;
+}
+.bg15 {
+    background-attachment: fixed;
+}
+.rs-quote.style1 .quote-form .form-ctrl label {
+    color: #000!important;
+}
+.rs-footer .footer-bottom .copyright p {
+    margin-bottom: 0;
+    color: #000!important;
+}
+.rs-quote.style1 .quote-form .form-ctrl input, .rs-quote.style1 .quote-form .form-ctrl select {
+    background: #f8f8f8!important;
+    border: 1px solid #f0f0f0!important;
+    border-radius: 10px;
+}
+.rs-quote.style1 .quote-form .submit-btn button {
+    background: #ff8b00!important;
+    color: #ffffff!important;
+    border:3px solid #fff;
+    border-radius: 40px;
+    margin: 30px 0 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+.rs-quote.style1 .quote-form .submit-btn button:hover{
+    background: #FCEA10!important;
+    color: ;
+}
+body.home-six .rs-footer .footer-bottom .footer-social li a:hover {
+    background: #000!important;
+}
+body.home-six #scrollUp i:hover{
+    background: #000;
+}
+.whatsapp{
+    position: fixed;
+    z-index: 999999;
+    bottom: 10px;
+    width: 90px;
+    left: 20px;
+}
+.rs-services.style7 .services-wrap .title {
+    line-height: 22px!important;
+}
+.rs-blog.style1.modify2.green .blog-wrap .content-part a.categories {
+    display: block!important;
+}
+@media screen and (max-width: 992px) {
+  .w100 {
+      width: auto;
+        display: initial;
+    }
+    .rs-slider.slider6 .slider {
+    height: 560px!important;
+    padding: 15px 0 0!important;
+}
+    .rs-slider.slider6 .slider.slide2 .content-part .sl-title {
+    font-size: 26px!important;
+    line-height: 30px!important;
+}
+    .mar_2m{
+        margin: 260px 0 0 0!important;
+    }
+    .rs-slider.slider6 .slider.slide1 .content-part .sl-title {
+        font-size: 28px;
+        line-height: 8px;
+    }
+    .bg15 {
+        background-size: 350%;
+    }
+    .gutter-16 [class*="col-"] {
+        padding-left: 8px;
+        padding-right: 8px;
+        margin: 20px 0 0 0;
+    }
+}
