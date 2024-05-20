@@ -11,8 +11,8 @@ export const NotAccount = ({ msgEmpty }) => {
       alignItems="center"
       justifyContent="center"
       sx={{
-        minHeight: "calc( 100vh - 110px )",
-        backgroundColor: "primary.main",
+        minHeight: "calc( 100vh - 210px )",
+        backgroundColor: '#ff8b00',
         borderRadius: 3,
       }}
     >

@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { Alert, Button, Grid, TextField, Link } from "@mui/material";
+import { Alert, Button, Grid, TextField, Link, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { startLoginWhitEmailPassword } from "../../store/auth";
+import "../../assets/stylesHome.css"
+import logo from "../../assets/img/logo-dark.png";
 
 const formInitial = {
   email: [
@@ -52,12 +54,21 @@ export const LoginPage = () => {
   };
 
   return (
-    <AuthLayout title="Iniciar sesión">
+
+    <AuthLayout >
+      <a href="/" style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}><img style={{ width: 300, alignSelf: 'center' }} src={logo} alt="logo" /></a>
+      <a style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}>
+        <Typography variant="h5" sx={{ mb: 1, alignSelf: 'center' }}>
+          Iniciar sesión
+        </Typography>
+      </a>
+
       <form
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animate__faster"
       >
         <Grid container>
+
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
               label="Correo"
@@ -99,6 +110,7 @@ export const LoginPage = () => {
                 type="submit"
                 variant="contained"
                 fullWidth
+                sx={{ backgroundColor: "#ff8b00" }}
               >
                 Login
               </Button>

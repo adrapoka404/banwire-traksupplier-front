@@ -95,6 +95,7 @@ export const FormAccount = () => {
               type="submit"
               variant="contained"
               fullWidth
+              sx={{ backgroundColor: "#ff8b00",}}
             >
               {active?.id ? "Editar" : "Guardar"}
             </Button>

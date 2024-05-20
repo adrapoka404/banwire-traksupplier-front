@@ -111,11 +111,12 @@ export const FormProfile = () => {
   };
 
   return (
+    <Grid container >
     <form
       onSubmit={onSubmit}
       className="animate__animated animate__fadeIn animate__faster"
     >
-      <Grid container spacing={2}>
+      <Grid container xs={12} spacing={2}>
         <Grid item xs={12} sx={{ mt: 2 }}>
           <TextField
             label="Nombre(s)"
@@ -254,11 +255,13 @@ export const FormProfile = () => {
             type="submit"
             variant="contained"
             fullWidth
+            sx={{ backgroundColor: "#ff8b00"}}
           >
             {profile?.id ? "Editar" : "Guardar"}
           </Button>
         </Grid>
       </Grid>
     </form>
+    </Grid>
   );
 };

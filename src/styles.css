@@ -48,15 +48,16 @@
 .btn {
   border: none;
   color: white;
-  padding: 14px 28px;
+  padding: 5px 28px;
   cursor: pointer;
   border-radius: 5px;
-  margin: 0px, 3px, 0px, 3px;
+  margin-left: 20px;
   text-decoration: none;
+  
 }
 
 .primary {
-  background-color: #222654;
+  background-color: #ff8b00;
 }
 .primary:hover {
   background: #e7e7e7;
@@ -64,7 +65,7 @@
 }
 
 .secondary {
-  background-color: #e7e7e7;
+  background-color: white;
   color: black;
 }
 
@@ -76,6 +77,9 @@
   display: block;
   margin-bottom: 3px;
 } */
+.iconColor{
+  color: black;
+}
 
 .form-field input {
   width: 100%;

@@ -39,7 +39,7 @@ export const PopUp = (open = true) => {
         size="large"
         sx={{
           color: "white",
-          backgroundColor: "error.main",
+          backgroundColor: "#ff8b00",
           ":hover": { backgroundColor: "error.main", opacity: 0.9 },
           position: "fixed",
           right: 110,
@@ -55,7 +55,7 @@ export const PopUp = (open = true) => {
         size="large"
         sx={{
           color: "white",
-          backgroundColor: "error.main",
+          backgroundColor: "#ff8b00",
           ":hover": { backgroundColor: "error.main", opacity: 0.9 },
           position: "fixed",
           right: 50,

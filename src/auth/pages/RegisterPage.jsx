@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-
+import "../../assets/stylesHome.css"
+import logo from "../../assets/img/logo-dark.png";
 import { startCreateingUserWithEmailPassword } from "../../store/auth";
 
 const formData = {
@@ -67,7 +68,13 @@ export const RegisterPage = () => {
   };
 
   return (
-    <AuthLayout title="Crear cuenta">
+    <AuthLayout>
+      <a href="/" style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}><img style={{ width: 300, alignSelf: 'center' }} src={logo} alt="logo" /></a>
+      <a style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}>
+        <Typography variant="h5" sx={{ mb: 1, alignSelf: 'center' }}>
+          Crear cuenta
+        </Typography>
+      </a>
       <form
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animate__faster"
@@ -122,6 +129,7 @@ export const RegisterPage = () => {
                 type="submit"
                 variant="contained"
                 fullWidth
+                sx={{ backgroundColor: "#ff8b00" }}
               >
                 Crear cuenta
               </Button>
