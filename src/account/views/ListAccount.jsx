@@ -27,7 +27,8 @@ import { configBanwire } from "../../banwire/config";
 
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
-
+import '../../assets/css/components/table.css'
+import moment from "moment";
 export const ListAccount = ({ accounts, inPage }) => {
   const dispatch = useDispatch();
 
@@ -141,23 +142,26 @@ export const ListAccount = ({ accounts, inPage }) => {
 
   let cantRestore = false;
   if (inPage == "cancel") cantRestore = true;
-
   return (
-    <List
-      sx={{
-        width: "100%",
-        maxWidth: 500,
-        bgcolor: "background.paper",
-        textAlign: "left",
-      }}
-    >
-      {accounts.map((account, index) => (
-        <ListItem
-          key={account.date}
-          disableGutters
-          sx={{ textAlign: "left" }}
-          secondaryAction={
-            showPay ? (
+    <>
+
+      <table class="container">
+        <thead>
+          <tr>
+            <th><h1>ID</h1></th>
+            <th><h1>Descripción</h1></th>
+            <th><h1>Total</h1></th>
+            <th><h1>Fecha</h1></th>
+            <th><h1>Opciones</h1></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {accounts.map((account, index) => (<>  <tr><td key={account.date}>{`${index + 1}`}</td>
+            <td style={{textTransform: 'capitalize'}}>{account.conceptAccount}</td>
+            <td style={{textTransform: 'capitalize'}}>$ {account.amountAccount}</td>
+            <td>{moment(account.date).subtract(10, 'days').calendar()}</td>
+            <td>{showPay && (
               <IconButton
                 aria-label="Pagar"
                 color="green"
@@ -176,73 +180,70 @@ export const ListAccount = ({ accounts, inPage }) => {
               >
                 {isWorking ? <Payment /> : <PaymentOutlined />}
               </IconButton>
-            ) : (
-              ""
             )
-          }
-        >
-          <ListItemText primary={`${index + 1}`} />
-          <ListItemText
-            primary={account.conceptAccount}
-            sx={{ textAlign: "center" }}
-          />
-          {cantEdit ? (
-            <IconButton
-              aria-label="Editar"
-              onClick={() => {
-                startEdit(account);
-              }}
-              display={showPay == false ? "" : "none"}
-            >
-              <Edit />
-            </IconButton>
-          ) : (
-            ""
-          )}
-          {cantCancel ? (
-            <IconButton
-              aria-label="Cancelar"
-              onClick={() => {
-                onClickCancel(account);
-              }}
-            >
-              <NotInterested />
-            </IconButton>
-          ) : (
-            ""
-          )}
-          {cantDelete ? (
-            <IconButton
-              aria-label="Eliminar"
-              onClick={() => {
-                startDelete(account);
-              }}
-            >
-              <Delete />
-            </IconButton>
-          ) : (
-            ""
-          )}
-          {cantRestore ? (
-            <IconButton
-              aria-label="Restaurar"
-              onClick={() => {
-                startRestore(account);
-              }}
-            >
-              <Restore />
-            </IconButton>
-          ) : account.payment ? (
-            account.payment.total +
-            " | " +
-            account.payment.event +
-            " | " +
-            account.payment.status
-          ) : (
-            ""
-          )}
-        </ListItem>
-      ))}
-    </List>
+
+
+            }
+              {
+                cantEdit && (
+                  <IconButton
+                    aria-label="Editar"
+                    onClick={() => {
+                      startEdit(account);
+                    }}
+                    display={showPay == false ? "" : "none"}
+                  >
+                    <Edit />
+                  </IconButton>
+                )
+              }
+              {
+                cantCancel && (
+                  <IconButton
+                    aria-label="Cancelar"
+                    onClick={() => {
+                      onClickCancel(account);
+                    }}
+                  >
+                    <NotInterested />
+                  </IconButton>
+                )
+              }
+              {cantDelete && (
+                <IconButton
+                  aria-label="Eliminar"
+                  onClick={() => {
+                    startDelete(account);
+                  }}
+                >
+                  <Delete />
+                </IconButton>
+              )}
+              {cantRestore ? (
+                <IconButton
+                  aria-label="Restaurar"
+                  onClick={() => {
+                    startRestore(account);
+                  }}
+                >
+                  <Restore />
+                </IconButton>
+              ) : account.payment ? (
+                account.payment.total +
+                " | " +
+                account.payment.event +
+                " | " +
+                account.payment.status
+              ) : (
+                ""
+              )}
+            </td> </tr></>))}
+
+
+        </tbody>
+      </table>
+
+
+    </>
   );
 };
