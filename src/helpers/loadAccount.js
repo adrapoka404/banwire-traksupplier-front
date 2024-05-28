@@ -3,14 +3,15 @@ import { FirebaseDB } from "../firebase/config";
 
 export const loadAccount = async (uid = "", admin = false) => {
   if (!uid) throw new Error("EL ID de usuario no existe");
-  if (admin == false) {
-    const collectionRef = query(
+  let collectionRef = false;
+  if (admin === false) {
+    collectionRef = query(
       collection(FirebaseDB, `accounts`),
       where("statusAccount", "==", null),
       where("userAccount", "==", uid)
     );
   } else {
-    const collectionRef = query(
+    collectionRef = query(
       collection(FirebaseDB, `accounts`),
       where("statusAccount", "==", null)
     );
