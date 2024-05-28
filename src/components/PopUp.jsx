@@ -31,6 +31,14 @@ export const PopUp = (open = true) => {
     dispatch(ctrlOpenPopup());
   }
 
+  const [file, setFile] = useState(null);
+
+  // Manejador de cambio de archivo
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
   return (
     <div>
       <IconButton
