@@ -51,19 +51,18 @@ export const ListAccount = ({ accounts, inPage }) => {
       title: changeAccount.conceptAccount,
       language: "es",
       secure3d: false,
-      reference: user.uid,
+      reference: changeAccount.id,
       concept: changeAccount.conceptAccount,
       currency: "MXN",
       cust: { ...profile },
       ship: { addr, city, state, country, zip },
       showShipping: false,
-      url_notify: configBanwire.notifyUrl,
-      notifyUrl: configBanwire.notifyUrl,
+      url_notify: configBanwire.notifyUrl + user.uid,
+      notifyUrl: configBanwire.notifyUrl + user.uid,
       paymentOptions: "all",
       reviewOrder: true,
       total: changeAccount.amountAccount,
       onSuccess: function (data) {
-        console.log("Si jala");
         console.log("¡Gracias por tu pago!");
       },
       onPending: (data) => {
@@ -74,11 +73,9 @@ export const ListAccount = ({ accounts, inPage }) => {
         alert("Pago enviado a validaciones de seguridad");
       },
       onError: function (data) {
-        console.log(data);
         console.log("Error en el pago");
       },
       onCancel: function (data) {
-        console.log(data);
         console.log("Se cancelo el proceso ADX");
       },
     });
@@ -130,26 +127,35 @@ export const ListAccount = ({ accounts, inPage }) => {
   }, [messageAccount]);
 
   let showPay = false;
-  if (cantPay && inPage == "null") showPay = true;
+  if (cantPay && inPage == "null" && profile.admin == false) showPay = true;
 
   let cantEdit = false;
-  if (inPage == "null") cantEdit = true;
+  if (inPage == "null" && profile.admin == true) cantEdit = true;
 
   let cantCancel = false;
-  if (inPage == "null") cantCancel = true;
+  if (inPage == "null" && profile.admin == true) cantCancel = true;
 
   let cantDelete = false;
-  if (inPage == "null" || inPage == "cancel") cantDelete = true;
+  if ((inPage == "null" || inPage == "cancel") && profile.admin == true)
+    cantDelete = true;
 
   let cantRestore = false;
   if (inPage == "cancel") cantRestore = true;
 
   return (
-    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {accounts.map((account) => (
+    <List
+      sx={{
+        width: "100%",
+        maxWidth: 500,
+        bgcolor: "background.paper",
+        textAlign: "left",
+      }}
+    >
+      {accounts.map((account, index) => (
         <ListItem
           key={account.date}
           disableGutters
+          sx={{ textAlign: "left" }}
           secondaryAction={
             showPay ? (
               <IconButton
@@ -175,7 +181,11 @@ export const ListAccount = ({ accounts, inPage }) => {
             )
           }
         >
-          <ListItemText primary={account.conceptAccount} />
+          <ListItemText primary={`${index + 1}`} />
+          <ListItemText
+            primary={account.conceptAccount}
+            sx={{ textAlign: "center" }}
+          />
           {cantEdit ? (
             <IconButton
               aria-label="Editar"
@@ -222,6 +232,12 @@ export const ListAccount = ({ accounts, inPage }) => {
             >
               <Restore />
             </IconButton>
+          ) : account.payment ? (
+            account.payment.total +
+            " | " +
+            account.payment.event +
+            " | " +
+            account.payment.status
           ) : (
             ""
           )}

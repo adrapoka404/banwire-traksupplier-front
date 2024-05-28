@@ -1,16 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startLogout } from "../store/auth";
 import { AppBar, Grid, IconButton, Toolbar } from "@mui/material";
-import {
-  LoginOutlined,
-  Margin,
-  MenuOutlined,
-  Person2Outlined,
-} from "@mui/icons-material";
+import { LoginOutlined, MenuOutlined } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/img/logo-dark.png";
+
 export const NavBar = ({ drawerWidth = 240 }) => {
   const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.profile);
 
   const onLogout = () => {
     dispatch(startLogout());
@@ -31,18 +28,32 @@ export const NavBar = ({ drawerWidth = 240 }) => {
           color="inherit"
           edge="start"
           sx={{ mr: 2, display: { sm: "none" } }}
-
         >
           <MenuOutlined />
         </IconButton>
 
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-        >
-          <a href="/" style={{ alignItems: 'center', justifyContent: 'center', width: '30%' }}><img style={{ width: 300, alignSelf: 'center' }} src={logo} alt="logo" /></a>
-          <div style={{ alignItems: 'center', justifyContent: 'center', width: '60%' }}>
+        <Grid container direction="row" alignItems="center">
+          <a
+            href="/"
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "30%",
+            }}
+          >
+            <img
+              style={{ width: 300, alignSelf: "center" }}
+              src={logo}
+              alt="logo"
+            />
+          </a>
+          <div
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "60%",
+            }}
+          >
             <NavLink
               className={({ isActive }) =>
                 `btn ${isActive ? " secondary" : " primary"}`
@@ -68,18 +79,27 @@ export const NavBar = ({ drawerWidth = 240 }) => {
             >
               Pagadas
             </NavLink>
-
-            <NavLink
-              className={({ isActive }) =>
-                `btn ${isActive ? " secondary" : " primary"}`
-              }
-              to="/account/cancel"
-            >
-              Canceladas
-            </NavLink>
+            {profile.admin === true ? (
+              <NavLink
+                className={({ isActive }) =>
+                  `btn ${isActive ? " secondary" : " primary"}`
+                }
+                to="/account/cancel"
+              >
+                Canceladas
+              </NavLink>
+            ) : (
+              ""
+            )}
           </div>
-          <div style={{ alignItems: 'center', justifyContent: 'flex-end', width: '10%' }}>
-            <IconButton onClick={onLogout} >
+          <div
+            style={{
+              alignItems: "center",
+              justifyContent: "flex-end",
+              width: "10%",
+            }}
+          >
+            <IconButton onClick={onLogout}>
               <LoginOutlined className="iconColor" />
             </IconButton>
           </div>

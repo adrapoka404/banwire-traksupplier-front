@@ -1,13 +1,21 @@
 import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { FirebaseDB } from "../firebase/config";
 
-export const loadAccount = async (uid = "") => {
+export const loadAccount = async (uid = "", admin = false) => {
   if (!uid) throw new Error("EL ID de usuario no existe");
+  if (admin == false) {
+    const collectionRef = query(
+      collection(FirebaseDB, `accounts`),
+      where("statusAccount", "==", null),
+      where("userAccount", "==", uid)
+    );
+  } else {
+    const collectionRef = query(
+      collection(FirebaseDB, `accounts`),
+      where("statusAccount", "==", null)
+    );
+  }
 
-  const collectionRef = query(
-    collection(FirebaseDB, `${uid}/traksupplier/accounts`),
-    where("statusAccount", "==", null)
-  );
   const docs = await getDocs(collectionRef);
 
   const accounts = [];

@@ -17,7 +17,11 @@ import {
   loadAccountPending,
 } from "../../helpers/loadAccount";
 
-export const startSaveAccount = ({ conceptAccount, amountAccount }) => {
+export const startSaveAccount = ({
+  conceptAccount,
+  amountAccount,
+  userAccount,
+}) => {
   return async (dispatch, getState) => {
     dispatch(createAccount());
 
@@ -28,10 +32,11 @@ export const startSaveAccount = ({ conceptAccount, amountAccount }) => {
       statusAccount: null,
       conceptAccount,
       amountAccount,
+      userAccount,
       date: new Date().getTime(),
     };
 
-    const newDoc = doc(collection(FirebaseDB, `${uid}/traksupplier/accounts`));
+    const newDoc = doc(collection(FirebaseDB, `accounts`));
 
     await setDoc(newDoc, newAccount);
     newAccount.id = newDoc.id;
@@ -44,6 +49,7 @@ export const startSaveAccount = ({ conceptAccount, amountAccount }) => {
 export const startGetAccountAwait = () => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
+
     const accounts = await loadAccount(uid);
     const msgEmpty = "No hay registro de cuentas por pagar";
     dispatch(setAccounts({ accounts, msgEmpty }));

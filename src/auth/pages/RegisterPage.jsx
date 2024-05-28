@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-import "../../assets/stylesHome.css"
+import "../../assets/stylesHome.css";
 import logo from "../../assets/img/logo-dark.png";
 import { startCreateingUserWithEmailPassword } from "../../store/auth";
 
@@ -63,15 +63,36 @@ export const RegisterPage = () => {
     setFormSubmitted(true);
 
     if (!isFormValid) return;
-    console.log(formState);
+
     dispatch(startCreateingUserWithEmailPassword(formState));
   };
 
   return (
     <AuthLayout>
-      <a href="/" style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}><img style={{ width: 300, alignSelf: 'center' }} src={logo} alt="logo" /></a>
-      <a style={{ alignItems: 'center', display: 'flex', width: '100%', justifyContent: 'center' }}>
-        <Typography variant="h5" sx={{ mb: 1, alignSelf: 'center' }}>
+      <a
+        href="/"
+        style={{
+          alignItems: "center",
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          style={{ width: 300, alignSelf: "center" }}
+          src={logo}
+          alt="logo"
+        />
+      </a>
+      <a
+        style={{
+          alignItems: "center",
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="h5" sx={{ mb: 1, alignSelf: "center" }}>
           Crear cuenta
         </Typography>
       </a>

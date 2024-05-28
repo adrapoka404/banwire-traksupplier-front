@@ -48,22 +48,25 @@ export const PopUp = (open = true) => {
       >
         <Person2Outlined sx={{ fontSize: 30 }} />
       </IconButton>
-
-      <IconButton
-        onClick={startFormAccount}
-        disabled={isWorking}
-        size="large"
-        sx={{
-          color: "white",
-          backgroundColor: "#ff8b00",
-          ":hover": { backgroundColor: "error.main", opacity: 0.9 },
-          position: "fixed",
-          right: 50,
-          bottom: 50,
-        }}
-      >
-        <AccountBalanceWallet sx={{ fontSize: 30 }} />
-      </IconButton>
+      {profile.admin === true ? (
+        <IconButton
+          onClick={startFormAccount}
+          disabled={isWorking}
+          size="large"
+          sx={{
+            color: "white",
+            backgroundColor: "#ff8b00",
+            ":hover": { backgroundColor: "error.main", opacity: 0.9 },
+            position: "fixed",
+            right: 50,
+            bottom: 50,
+          }}
+        >
+          <AccountBalanceWallet sx={{ fontSize: 30 }} />
+        </IconButton>
+      ) : (
+        ""
+      )}
 
       {popup && (
         <PopContent

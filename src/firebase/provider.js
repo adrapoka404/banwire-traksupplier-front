@@ -5,18 +5,24 @@ import {
   signInWithPopup,
   updateProfile,
 } from "firebase/auth";
-import { FirebaseAuth } from "./config";
+import { FirebaseAuth, FirebaseDB } from "./config";
+import {
+  doc,
+  setDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore/lite";
 
 const googleProvider = new GoogleAuthProvider();
 
 export const singInWhithGoogle = async () => {
   try {
     const result = await signInWithPopup(FirebaseAuth, googleProvider);
-    // const credentials = GoogleAuthProvider.credentialFromResult(result);
     const { displayName, email, photoURL, uid } = result.user;
     return {
       ok: true,
-      //User info
       displayName,
       email,
       photoURL,
@@ -36,9 +42,9 @@ export const registerUserWithEmailPassword = async ({
   email,
   password,
   displayName,
+  admin = false,
 }) => {
   try {
-    console.log({ email, password, displayName });
     const resp = await createUserWithEmailAndPassword(
       FirebaseAuth,
       email,
@@ -47,7 +53,21 @@ export const registerUserWithEmailPassword = async ({
 
     const { uid, photoURL } = resp.user;
 
-    await updateProfile(FirebaseAuth.currentUser, { displayName });
+    await updateProfile(FirebaseAuth.currentUser, {
+      displayName,
+    });
+
+    await setDoc(doc(FirebaseDB, `${uid}/traksupplier/profile`, uid), {
+      displayName,
+      email,
+      admin,
+    });
+
+    await setDoc(doc(FirebaseDB, "users", uid), {
+      displayName,
+      email,
+      admin,
+    });
 
     return {
       ok: true,
@@ -55,6 +75,7 @@ export const registerUserWithEmailPassword = async ({
       photoURL,
       email,
       displayName,
+      admin,
     };
   } catch (error) {
     return {
@@ -72,7 +93,7 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
       password
     );
 
-    const { uid, photoURL, displayName } = result.user;
+    const { uid, photoURL, displayName, admin } = result.user;
 
     return {
       ok: true,
@@ -80,6 +101,7 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
       photoURL,
       email,
       displayName,
+      admin,
     };
   } catch (error) {
     return {
@@ -91,4 +113,15 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
 
 export const logoutFirebase = async () => {
   return await FirebaseAuth.signOut();
+};
+
+export const fetchUsers = async () => {
+  const usersCollection = collection(FirebaseDB, "users");
+  const usersQuery = query(usersCollection, where("admin", "!=", true));
+  const usersSnapshot = await getDocs(usersQuery);
+  const usersList = usersSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return usersList;
 };

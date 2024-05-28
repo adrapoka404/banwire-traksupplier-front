@@ -11,6 +11,7 @@ export const authSlice = createSlice({
     uid: null,
     email: null,
     displayName: null,
+    admin: false,
     photoURL: null,
     errorMessage: null,
     profile: {},
@@ -21,6 +22,7 @@ export const authSlice = createSlice({
       state.uid = payload.uid;
       state.email = payload.email;
       state.displayName = payload.displayName;
+      state.admin = payload.admin;
       state.photoURL = payload.photoURL;
       state.errorMessage = null;
     },
@@ -29,6 +31,7 @@ export const authSlice = createSlice({
       state.uid = null;
       state.email = null;
       state.displayName = null;
+      state.admin = false;
       state.photoURL = null;
       state.errorMessage = payload?.errorMessage;
     },
@@ -37,8 +40,6 @@ export const authSlice = createSlice({
     },
     setProfileInAuth: (state, action) => {
       state.profile = action.payload;
-      console.log("vengo a guardar");
-      console.log(action.payload);
     },
   },
 });
