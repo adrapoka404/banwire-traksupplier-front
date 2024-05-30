@@ -1,17 +1,15 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { doc, getDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../firebase/config";
 
 export const loadProfile = async (uid = "") => {
-  if (!uid) throw new Error("EL ID de usuario no existe");
+  if (!uid) throw new Error("El ID de usuario no existe");
 
-  const docRef = collection(FirebaseDB, `${uid}/traksupplier/profile`);
-  const docs = await getDocs(docRef);
+  const docRef = doc(FirebaseDB, `profile`, uid);
+  const docSnap = await getDoc(docRef);
 
-  const profiles = [];
-
-  docs.forEach((doc) => {
-    profiles.push({ id: doc.id, ...doc.data() });
-  });
-
-  return profiles[0];
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  } else {
+    throw new Error("Perfil no encontrado");
+  }
 };

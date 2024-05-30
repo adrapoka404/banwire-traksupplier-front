@@ -52,11 +52,11 @@ const formInitial = {
 
 export const FormProfile = () => {
   const { isWorking, profile } = useSelector((state) => state.profile);
-  const { email: emailAuth, admin: role } = useSelector((state) => state.auth);
+  const { email: emailAuth } = useSelector((state) => state.auth);
   const user = useSelector((state) => state.auth);
-  console.log({ user });
+
   const [formSubmitted, setFormSubmitted] = useState(false);
-  console.log(role);
+
   const dispatch = useDispatch();
 
   const formValidations = formInitial;
@@ -88,16 +88,16 @@ export const FormProfile = () => {
     onResetForm,
   } = useForm(
     {
-      fname: profile ? profile.fname : "",
-      mname: profile ? profile.mname : "",
-      lname: profile ? profile.lname : "",
-      email: emailAuth ? emailAuth : profile ? profile.email : "",
-      phone: profile ? profile.phone : "",
-      addr: profile ? profile.addr : "",
-      city: profile ? profile.city : "",
-      state: profile ? profile.state : "",
-      country: profile ? profile.country : "",
-      zip: profile ? profile.zip : "",
+      fname: profile?.fname ? profile.fname : "",
+      mname: profile?.mname ? profile.mname : "",
+      lname: profile?.lname ? profile.lname : "",
+      email: emailAuth ? emailAuth : profile?.email ? profile.email : "",
+      phone: profile?.phone ? profile.phone : "",
+      addr: profile?.addr ? profile.addr : "",
+      city: profile?.city ? profile.city : "",
+      state: profile?.city ? profile.state : "",
+      country: profile?.country ? profile.country : "",
+      zip: profile?.zip ? profile.zip : "",
     },
     formValidations
   );
@@ -119,7 +119,7 @@ export const FormProfile = () => {
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animate__faster"
       >
-        <Grid container xs={12} spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
               label="Nombre(s)"

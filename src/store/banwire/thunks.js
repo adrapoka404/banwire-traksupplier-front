@@ -6,7 +6,7 @@ export const startChangeStatusPendigAccount = async (account, uid) => {
 
   delete accountToFirebase.id;
   accountToFirebase.statusAccount = "pending";
-  const docRef = doc(FirebaseDB, `${uid}/traksupplier/accounts/${account.id}`);
+  const docRef = doc(FirebaseDB, `accounts/${account.id}`);
 
   await setDoc(docRef, accountToFirebase, { merge: true });
 };

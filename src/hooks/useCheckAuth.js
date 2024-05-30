@@ -16,11 +16,12 @@ export const useCheckAuth = () => {
       if (!user) return dispatch(logout());
 
       const { uid, email, displayName, photoURL, admin } = user;
-      console.log(admin);
+
       dispatch(login({ uid, email, displayName, photoURL }));
-      dispatch(startGetAccountAwait());
+
       dispatch(startGetProfile());
-      dispatch(cantPay());
+      dispatch(startGetAccountAwait());
+      // dispatch(cantPay());
     });
   }, []);
 

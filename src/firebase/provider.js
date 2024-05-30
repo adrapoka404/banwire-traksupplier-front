@@ -1,42 +1,18 @@
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { FirebaseAuth, FirebaseDB } from "./config";
 import {
   doc,
   setDoc,
+  getDoc,
   collection,
   getDocs,
   query,
   where,
 } from "firebase/firestore/lite";
-
-const googleProvider = new GoogleAuthProvider();
-
-export const singInWhithGoogle = async () => {
-  try {
-    const result = await signInWithPopup(FirebaseAuth, googleProvider);
-    const { displayName, email, photoURL, uid } = result.user;
-    return {
-      ok: true,
-      displayName,
-      email,
-      photoURL,
-      uid,
-    };
-  } catch (error) {
-    const errorCode = error.errorCode;
-    const errorMessage = error.errorMessage;
-    return {
-      ok: false,
-      errorMessage,
-    };
-  }
-};
 
 export const registerUserWithEmailPassword = async ({
   email,
@@ -57,7 +33,7 @@ export const registerUserWithEmailPassword = async ({
       displayName,
     });
 
-    await setDoc(doc(FirebaseDB, `${uid}/traksupplier/profile`, uid), {
+    await setDoc(doc(FirebaseDB, `profile`, uid), {
       displayName,
       email,
       admin,
@@ -78,6 +54,7 @@ export const registerUserWithEmailPassword = async ({
       admin,
     };
   } catch (error) {
+    console.error("Error al registrar usuario:", error.message);
     return {
       ok: false,
       errorMessage: error.message,
@@ -93,7 +70,15 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
       password
     );
 
-    const { uid, photoURL, displayName, admin } = result.user;
+    const { uid, photoURL, displayName } = result.user;
+
+    const userDoc = await getDoc(doc(FirebaseDB, "users", uid));
+    let admin = false;
+    if (userDoc.exists()) {
+      admin = userDoc.data().admin;
+    } else {
+      console.log("No se encontró el documento del usuario en Firestore.");
+    }
 
     return {
       ok: true,
@@ -104,6 +89,7 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
       admin,
     };
   } catch (error) {
+    console.error("Error en loginWhitEmailPassword:", error.message);
     return {
       ok: false,
       errorMessage: error.message,
@@ -112,16 +98,26 @@ export const loginWhitEmailPassword = async ({ email, password }) => {
 };
 
 export const logoutFirebase = async () => {
-  return await FirebaseAuth.signOut();
+  try {
+    await FirebaseAuth.signOut();
+    console.log("Sesión cerrada correctamente.");
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error.message);
+  }
 };
 
 export const fetchUsers = async () => {
-  const usersCollection = collection(FirebaseDB, "users");
-  const usersQuery = query(usersCollection, where("admin", "!=", true));
-  const usersSnapshot = await getDocs(usersQuery);
-  const usersList = usersSnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-  return usersList;
+  try {
+    const usersCollection = collection(FirebaseDB, "users");
+    const usersQuery = query(usersCollection, where("admin", "!=", true));
+    const usersSnapshot = await getDocs(usersQuery);
+    const usersList = usersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return usersList;
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error.message);
+    return [];
+  }
 };

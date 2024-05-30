@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AccountLayout } from "../layout/AccountLayout";
@@ -13,10 +13,12 @@ import {
   startGetAccountPay,
   startGetAccountAwait,
   startGetAccountPending,
+  clearAlertAccount,
 } from "../../store/account";
 
 import { NotAccount } from "../views/NotAccounts";
 import { ListAccount } from "../views/ListAccount";
+import { clearAlertProfile } from "../../store/profile";
 
 export const AccountPage = ({ account }) => {
   const dispatch = useDispatch();
@@ -24,32 +26,49 @@ export const AccountPage = ({ account }) => {
   const { messageAccount, accounts, msgEmpty } = useSelector(
     (state) => state.account
   );
+  const { messageProfile, isComplete } = useSelector((state) => state.profile);
 
-  const { messageProfile } = useSelector((state) => state.profile);
+  // Estados para controlar si se han mostrado las alertas
+  const [accountAlertShown, setAccountAlertShown] = useState(false);
+  const [profileAlertShown, setProfileAlertShown] = useState(false);
+
+  // Cargar cuentas al montar el componente y cuando la categoría de cuentas cambie
+  useEffect(() => {
+    switch (account) {
+      case "cancel":
+        dispatch(startGetAccountCancel());
+        break;
+      case "pay":
+        dispatch(startGetAccountPay());
+        break;
+      case "pending":
+        dispatch(startGetAccountPending());
+        break;
+      default:
+        dispatch(startGetAccountAwait());
+        break;
+    }
+  }, [account, dispatch, msgEmpty]);
 
   useEffect(() => {
-    if (account === "cancel") {
-      dispatch(startGetAccountCancel());
-    } else if (account === "pay") {
-      dispatch(startGetAccountPay());
-    } else if (account === "pending") {
-      dispatch(startGetAccountPending());
-    } else {
-      dispatch(startGetAccountAwait());
+    if (messageAccount.length > 0 && !accountAlertShown) {
+      Swal.fire("Cuentas: ", messageAccount, "success").then(() => {
+        // Marcar la alerta como mostrada después de que se cierre
+        setAccountAlertShown(true);
+        dispatch(clearAlertAccount());
+      });
     }
-  }, [account]);
+  }, [messageAccount, accountAlertShown]);
 
   useEffect(() => {
-    if (messageAccount.length > 0) {
-      Swal.fire("Cuentas: ", messageAccount, "success");
+    if (messageProfile.length > 0 && !profileAlertShown) {
+      Swal.fire("Direcciónes: ", messageProfile, "success").then(() => {
+        // Marcar la alerta como mostrada después de que se cierre
+        setProfileAlertShown(true);
+        dispatch(clearAlertProfile());
+      });
     }
-  }, [messageAccount]);
-
-  useEffect(() => {
-    if (messageProfile.length > 0) {
-      Swal.fire("Direcciónes: ", messageProfile, "success");
-    }
-  }, [messageProfile]);
+  }, [messageProfile, profileAlertShown]);
 
   return (
     <AccountLayout>
@@ -58,11 +77,16 @@ export const AccountPage = ({ account }) => {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
+        key={isComplete} // Añade la clave para forzar la re-renderización
       >
         {accounts?.length === 0 ? (
           <NotAccount msgEmpty={msgEmpty} />
         ) : (
-          <ListAccount accounts={accounts} inPage={account} />
+          <ListAccount
+            accounts={accounts}
+            inPage={account}
+            isComplete={isComplete}
+          />
         )}
       </Grid>
       <PopUp />

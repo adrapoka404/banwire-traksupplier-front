@@ -33,7 +33,6 @@ export const banwireSlice = createSlice({
       state.isWorking = true;
     },
     populateBanwire: (state, action) => {
-      console.log("vengo a popular", action);
       const { conceptAccount, amountAccount } = action.payload.account;
       const { addr, city, country, zip } = action.payload.profile;
 

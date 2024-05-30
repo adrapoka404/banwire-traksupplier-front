@@ -48,9 +48,11 @@ export const startSaveAccount = ({
 
 export const startGetAccountAwait = () => {
   return async (dispatch, getState) => {
-    const { uid } = getState().auth;
+    const { uid, admin } = getState().auth;
+    const { profile } = getState().profile;
 
-    const accounts = await loadAccount(uid);
+    const accounts = await loadAccount(uid, profile.admin);
+
     const msgEmpty = "No hay registro de cuentas por pagar";
     dispatch(setAccounts({ accounts, msgEmpty }));
   };
@@ -59,7 +61,9 @@ export const startGetAccountAwait = () => {
 export const startGetAccountPending = () => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
-    const accounts = await loadAccountPending(uid);
+    const { profile } = getState().profile;
+
+    const accounts = await loadAccountPending(uid, profile.admin);
     const msgEmpty = "No hay registro de cuentas pendientes de pago";
     dispatch(setAccounts({ accounts, msgEmpty }));
   };
@@ -67,7 +71,9 @@ export const startGetAccountPending = () => {
 export const startGetAccountPay = () => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
-    const accounts = await loadAccountPay(uid);
+    const { profile } = getState().profile;
+
+    const accounts = await loadAccountPay(uid, profile.admin);
     const msgEmpty = "No hay registro de cuentas pagadas";
     dispatch(setAccounts({ accounts, msgEmpty }));
   };
@@ -76,7 +82,9 @@ export const startGetAccountPay = () => {
 export const startGetAccountCancel = () => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
-    const accounts = await loadAccountCancel(uid);
+    const { profile } = getState().profile;
+
+    const accounts = await loadAccountCancel(uid, profile.admin);
     const msgEmpty = "No hay registro de cuentas canceladas";
     dispatch(setAccounts({ accounts, msgEmpty }));
   };
@@ -97,12 +105,10 @@ export const startAccountCancel = (account) => {
     const accountToFirebase = { ...account };
 
     delete accountToFirebase.id;
+
     accountToFirebase.statusAccount = "cancel";
 
-    const docRef = doc(
-      FirebaseDB,
-      `${uid}/traksupplier/accounts/${account.id}`
-    );
+    const docRef = doc(FirebaseDB, `accounts/${account.id}`);
 
     const resp = await setDoc(docRef, accountToFirebase, { merge: true });
 
@@ -116,10 +122,7 @@ export const startAccountDelete = (account) => {
 
     dispatch(activeAccount(account));
 
-    const docRef = doc(
-      FirebaseDB,
-      `${uid}/traksupplier/accounts/${account.id}`
-    );
+    const docRef = doc(FirebaseDB, `accounts/${account.id}`);
     const resp = await deleteDoc(docRef);
 
     dispatch(deleteAccount(account));
@@ -137,10 +140,7 @@ export const startAccountRestore = (account) => {
     delete accountToFirebase.id;
     accountToFirebase.statusAccount = null;
 
-    const docRef = doc(
-      FirebaseDB,
-      `${uid}/traksupplier/accounts/${account.id}`
-    );
+    const docRef = doc(FirebaseDB, `accounts/${account.id}`);
 
     const resp = await setDoc(docRef, accountToFirebase, { merge: true });
 
@@ -155,7 +155,7 @@ export const startAccountEdit = (account) => {
 
     const accountToFirebase = { ...account };
 
-    const docRef = doc(FirebaseDB, `${uid}/traksupplier/accounts/${active.id}`);
+    const docRef = doc(FirebaseDB, `accounts/${active.id}`);
 
     const resp = await setDoc(docRef, accountToFirebase, { merge: true });
 

@@ -92,6 +92,9 @@ export const accountSlice = createSlice({
       state.popup = false;
       state.active = false;
     },
+    clearAlertAccount: (state) => {
+      state.messageAccount = "";
+    },
   },
 });
 
@@ -108,4 +111,5 @@ export const {
   restoreAccount,
   ctrlOpenPopup,
   ctrlClosePopup,
+  clearAlertAccount,
 } = accountSlice.actions;

@@ -31,7 +31,10 @@ export const AppRouter = () => {
       <Routes>
         {status === "authenticated" ? (
           <>
-            <Route path="/*" element={<AccountPage account={toAccount} />} />
+            <Route
+              path="/*"
+              element={<AccountPage key={inPath} account={toAccount} />}
+            />
           </>
         ) : (
           <>

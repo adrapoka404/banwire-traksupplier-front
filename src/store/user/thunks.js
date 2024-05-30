@@ -5,21 +5,18 @@ import { checkingUser, notifyError } from "./userSlice";
 export const startCreateingUserWithEmailPassword = ({
   email,
   password,
-  displayname,
+  displayName,
+  admin = false,
 }) => {
   return async (dispatch) => {
     dispatch(checkingUser());
-    console.log({
-      email,
-      password,
-      displayname,
-    });
 
     const { ok, uid, photoURL, errorMessage } =
       await registerUserWithEmailPassword({
         email,
         password,
-        displayname,
+        displayName,
+        admin,
       });
 
     if (!ok) {
